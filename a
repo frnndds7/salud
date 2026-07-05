@@ -1,0 +1,264 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner leer = new Scanner(System.in);
+
+        ArrayList<String> nombres = new ArrayList<>();
+        ArrayList<Integer> edades = new ArrayList<>();
+        ArrayList<String> comuna = new ArrayList<>();
+        ArrayList<Integer> servicios = new ArrayList<>();
+        ArrayList<Integer> derivaciones = new ArrayList<>();
+        ArrayList<Integer> previsiones = new ArrayList<>();
+        ArrayList<Integer> cronicos = new ArrayList<>();
+
+        int opcionMenu = 0;
+
+        while (opcionMenu != 5) {
+            mostrarMenu();
+            opcionMenu = validarMenu(leer);
+            if (opcionMenu == 1) {
+                registrarConsulta(leer, nombres, edades, comuna, servicios, derivaciones, previsiones, cronicos);
+            } else if (opcionMenu == 2) {
+                buscarConsulta(nombres, edades, comuna, servicios, previsiones, cronicos, derivaciones);
+            } else if (opcionMenu == 3) {
+                mostrarTodasLasConsultas(nombres, edades, comuna, servicios, previsiones);
+            } else if (opcionMenu == 4) {
+                mostrarInfoSistema();
+            } else if (opcionMenu == 5) {
+                System.out.println(" Gracias por usar el sistema de orientacion" + nombres );
+            }
+        }
+    }
+
+    public static void mostrarMenu() {
+        System.out.println(" BIENVENIDO AL SISTEMA DE ORIENTACION ");
+        System.out.println("1. Iniciar orientacion medica ");
+        System.out.println("2. Recuperar una recomendacion de orientacion anterior");
+        System.out.println("3. Ver reporte estadistico de orientaciones entregadas hoy");
+        System.out.println("4. Informacion del sistema");
+        System.out.println("5. Salir");
+        System.out.println(" Seleccione una opcion:");
+    }
+
+    public static int validarMenu(Scanner leer) {
+        int opcion = leer.nextInt();
+        boolean invalido = true;
+        while (invalido) {
+            if (opcion >= 1) {
+                if (opcion <= 5) {
+                    invalido = false;
+                }
+            }
+            if (invalido) {
+                System.out.println(" Opcion incorrecta, seleccione de 1 a 5");
+                opcion = leer.nextInt();
+            }
+        }
+        return opcion;
+    }
+
+    public static int validarServicio(Scanner leer) {
+        int opcion = leer.nextInt();
+        boolean invalido = true;
+        while (invalido) {
+            if (opcion >= 1) {
+                if (opcion <= 4) {
+                    invalido = false;
+                }
+            }
+            if (invalido) {
+                System.out.print("Opcion incorrecta, seleccione de 1 a 4");
+                opcion = leer.nextInt();
+            }
+        }
+        return opcion;
+    }
+
+    public static int validarOpciondos(Scanner leer) {
+        int opcion = leer.nextInt();
+        boolean invalido = true;
+        while (invalido) {
+            if (opcion >= 1) {
+                if (opcion <= 2) {
+                    invalido = false;
+                }
+            }
+            if (invalido) {
+                System.out.println("Opcion incorrecta, seleccione opcion 1 u opcion 2");
+                opcion = leer.nextInt();
+            }
+        }
+        return opcion;
+    }
+
+    public static void registrarConsulta(Scanner leer, ArrayList<String> nombres, ArrayList<Integer> edades, ArrayList<String> comunas, ArrayList<Integer> servicios, ArrayList<Integer> derivaciones, ArrayList<Integer> previsiones, ArrayList<Integer> cronicos) {
+        String[] nombresServicios = {" consulta medica", "examen medico", "atencion urgente", " control medico"};
+        System.out.println(" REGISTRAR NUEVA CONSULTA");
+        System.out.print(" Ingrese su nombre:");
+        String nombre = leer.next();
+
+        System.out.print(" Ingrese su edad:");
+        int edad = leer.nextInt();
+
+        System.out.println(" Ingrese su comuna:");
+        String comuna = leer.next();
+
+        System.out.println(" Cual son sus sintomas principales? ");
+        System.out.println("1. Malestar general ");
+        System.out.println("2. Realizacion de examenes medicos ");
+        System.out.println("3. Urgencia medica");
+        System.out.println("4. Control medico programado");
+        System.out.println(" Seleccione una opcion:");
+        int servicioElegido = validarServicio(leer);
+
+        System.out.println(" Tiene alguna derivacion medica?");
+        System.out.println("1. Si ");
+        System.out.println("2. No ");
+        System.out.println(" Seleccione una opcion:");
+        int derivacion = validarOpciondos(leer);
+
+        System.out.println("Cual es su prevision?");
+        System.out.println("1. Isapre");
+        System.out.println("2. Fonasa");
+        System.out.print("Seleccione una opcion: ");
+        int prevision = validarOpciondos(leer);
+
+        System.out.println(" Padece de alguna enfermedad cronica? ( diabetes, hirpentension, asma, etc");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+        System.out.print("Seleccione una opción: ");
+        int cronico = validarOpciondos(leer);
+
+        System.out.println(" DIAGNOSTICO DE ORIENTACION ");
+
+        boolean esPrioritario = false;
+
+        if (edad <= 1) {
+            esPrioritario = true;
+        } else if (edad >= 65) {
+            esPrioritario = true;
+        } else if (cronico == 1) {
+            esPrioritario = true;
+        }
+
+        if (esPrioritario) {
+            System.out.println(" PACIENTE EN GRUPO DE RIESGO");
+            System.out.println(" Se sugiere atencion preferente debido que");
+            if(edad <= 1){
+                System.out.println(" Paciente menor de un año ");
+            }
+            if(edad >= 65){
+                System.out.println(" Adulto mayor");
+            }
+            if(cronico == 1){
+                System.out.println(" Enfermedad cronica activa ( en caso de tener sintomas graves)");
+            }
+        }
+        System.out.println(" ORIENTACION RECOMENDADA ");
+        if (servicioElegido == 1) {
+            System.out.println(" MALESTAR GENERAL O SINTOMAS LEVES");
+            System.out.println(" Se recomienda acudir al Cesfam de" + comuna + " Para una consulta general");
+        } else if (servicioElegido == 2){
+            System.out.println("REALIZACION DE EXAMENES MEDICOS");
+            System.out.println(" Dirigase al centro indicado en su orden");
+        }else if(servicioElegido == 3){
+            System.out.println(" URGENCOA MEDICA");
+            System.out.println("Establecimiento recomendado: SAPU o urgencia hospitalaria mas cercana");
+        }else if(servicioElegido == 4){
+            System.out.println(" CONTROL MEDICO PROGRAMADO ");
+            System.out.println(" Asista al hospital de "+ comuna + "o al centro medico indicado en su orden");
+        }
+        System.out.println("REQUISITOS OBLIGATORIOS");
+        System.out.println("Llevar cedula de identidad vigente");
+        if (derivacion == 1) {
+            System.out.println(" Documento fisico de la orden o derivacion medica");
+        }
+        if (prevision == 1) {
+            if (prevision == 1) {
+                System.out.println("Al ser Isapre debe preguntar en la recepcion si tienen convenio con su plan");
+            } else {
+                System.out.println(" Al ser Fonasa recuerde que tiene el beneficio copago cero");
+            }
+
+        }
+        nombres.add(nombre);
+        edades.add(edad);
+        comunas.add(comuna);
+        servicios.add(servicioElegido);
+        derivaciones.add(derivacion);
+        previsiones.add(prevision);
+        cronicos.add(cronico);
+
+        System.out.println("Consulta guardada exitosamente");
+
+    }
+
+    public static void buscarConsulta(ArrayList<String> nombres, ArrayList<Integer> edades, ArrayList<String> comunas, ArrayList<Integer> servicios, ArrayList<Integer> previsiones, ArrayList<Integer> cronicos, ArrayList<Integer> derivaciones) {
+        Scanner leer = new Scanner(System.in);
+        System.out.println(" RECUPERAR ATENCION ANTERIOR ");
+        if (nombres.isEmpty()) {
+            System.out.println(" No existen registros de orientacion en el sistema ");
+            return;
+        }
+        System.out.print(" Ingrese el nombre de el paciente para recuperar sus indicaciones");
+        String buscar = leer.next();
+        boolean encontrado = false;
+        for (int i = 0; i < nombres.size(); i++) {
+            if (nombres.get(i).equalsIgnoreCase(buscar)) {
+                System.out.println(" FICHA DE ORIENTACION EMITIDA ");
+                System.out.println(" Nombre: " + nombres.get(i));
+                System.out.println(" Edad: " + edades.get(i) + " años");
+                System.out.println(" Comuna: " + comunas.get(i));
+                if (servicios.get(i) == 1) {
+                    System.out.println(" Servicio sugerido: malestar general");
+                } else if (servicios.get(i) == 2) {
+                    System.out.println(" Servicio sugerido: realizacion de examenes medicos");
+                } else if (servicios.get(i) == 3) {
+                    System.out.println(" Servicio sugerido: urgencia medica");
+                } else if (servicios.get(i) == 4) {
+                    System.out.println(" Servicio sugerido: control medico programado");
+                }
+                if (previsiones.get(i) == 1) {
+                    System.out.println(" Prevision: Isapre");
+                } else {
+                    System.out.println(" Prevision: Fonasa");
+                }
+                if (derivaciones.get(i) == 1) {
+                    System.out.println(" ¿Presentaba derivacion?: Si");
+                } else {
+                    System.out.println(" ¿Presentaba derivacion?: No");
+                }
+                if (cronicos.get(i) == 1) {
+                    System.out.println(" ¿Paciente cronico?: Si");
+                } else {
+                    System.out.println(" ¿Paciente cronico?: No");
+                }
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            System.out.println(" No se encontro ninguna orientacion para el paciente:" + buscar);
+        }
+    }
+
+    public static void mostrarTodasLasConsultas(ArrayList<String> nombres, ArrayList<Integer> edades, ArrayList<String> comunas, ArrayList<Integer> servicios, ArrayList<Integer> previsiones) {
+        System.out.println(" REPORTE ESTADISTICO DE ORIENTACIONES ");
+        if (nombres.isEmpty()) {
+            System.out.println("No se han encontrado orientaciones el dia de hoy");
+            return;
+        }
+        for (int i = 0; i < nombres.size(); i++) {
+            System.out.println((i + 1) + " Paciente orientado: " + nombres.get(i) + "Edad: " + edades.get(i) + " Comuna: " + comunas.get(i));
+        }
+
+    }
+    public static void mostrarInfoSistema() {
+        System.out.println(" este sistema es para orientar a las");
+        System.out.println(" personas sobre como acceder a los");
+        System.out.println(" distintos servicios de salud");
+        System.out.println(" de forma correcta");
+    }
+}
+
+Que tal quedo este codigo? 
