@@ -1,10 +1,36 @@
 public class Consulta {
 
-    int servicio;
-    boolean derivacion;
+    private int servicio;
+    private boolean derivacion;
 
     public Consulta(int servicio, boolean derivacion) {
+
         this.servicio = servicio;
         this.derivacion = derivacion;
+    }
+
+    public void mostrarOrientacion(Paciente paciente) {
+
+
+        if (paciente.getEdad() >= 65 || paciente.isCronico()) {
+            System.out.println("Paciente perteneciente a grupo de riesgo");
+        }
+        if (servicio == 1) {
+            System.out.println("Se recomienda acudir al CESFAM de su comuna");
+        } else if (servicio == 2) {
+            System.out.println("Dirigirse al centro correspondiente para examenes");
+        } else if (servicio == 3) {
+            System.out.println("Se recomienda acudir a SAPU o Urgencia");
+        } else if (servicio == 4) {
+            System.out.println("Asistir al control medico programado");
+        }
+        if (derivacion) {
+            System.out.println("Paciente cuenta con derivacion medica");
+        }
+        if (paciente.getPrevision() == 1) {
+            System.out.println("Prevision: Isapre");
+        } else {
+            System.out.println("Prevision: Fonasa");
+        }
     }
 }
