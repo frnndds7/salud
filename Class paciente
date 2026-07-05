@@ -1,0 +1,16 @@
+public class Paciente {
+
+    String nombre;
+    int edad;
+    String comuna;
+    int prevision;
+    boolean cronico;
+
+    public Paciente(String nombre, int edad, String comuna, int prevision, boolean cronico) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.comuna = comuna;
+        this.prevision = prevision;
+        this.cronico = cronico;
+    }
+}
