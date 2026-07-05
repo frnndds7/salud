@@ -1,16 +1,33 @@
 public class Paciente {
 
-    String nombre;
-    int edad;
-    String comuna;
-    int prevision;
-    boolean cronico;
+    private String nombre;
+    private int edad;
+    private String comuna;
+    private int prevision;
+    private boolean cronico;
 
-    public Paciente(String nombre, int edad, String comuna, int prevision, boolean cronico) {
+    public Paciente(String nombre, int edad, String comuna,
+                    int prevision, boolean cronico) {
+
         this.nombre = nombre;
         this.edad = edad;
         this.comuna = comuna;
         this.prevision = prevision;
         this.cronico = cronico;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public int getEdad() {
+        return edad;
+    }
+    public String getComuna() {
+        return comuna;
+    }
+    public int getPrevision() {
+        return prevision;
+    }
+    public boolean isCronico() {
+        return cronico;
     }
 }
