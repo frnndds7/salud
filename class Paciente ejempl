@@ -1,0 +1,16 @@
+public class Paciente {
+
+    String nombre;
+    String rut;
+    int edad;
+    String comuna;
+    String diagnostico;
+
+    public Paciente(String nombre, String rut, int edad, String comuna, String diagnostico) {
+        this.nombre = nombre;
+        this.rut = rut;
+        this.edad = edad;
+        this.comuna = comuna;
+        this.diagnostico = diagnostico;
+    }
+}
